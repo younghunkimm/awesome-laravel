@@ -3,7 +3,7 @@
 @section('title', '회원가입')
 
 @section('content')
-    <form action="{{ route('register') }}" method="post">
+    <form action="{{ route('register') }}" method="POST">
         @csrf
         <input type="text" name="name" value="{{ old('name') }}">
         <input type="text" name="email" value="{{ old('email') }}">

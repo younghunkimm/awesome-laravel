@@ -3,21 +3,36 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\RegisterUserRequest;
+use App\Models\User;
+
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 
 class ResgisterController extends Controller
 {
+    /**
+     * 회원가입 폼
+     */
     public function showRegistrationForm()
     {
         return view('auth.register');
     }
 
-    public function register(Request $request)
+    /**
+     * 회원가입
+     */
+    public function register(RegisterUserRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users|max:255',
-            'password' => 'required|max:255'
+        $user = User::create([
+            ...$request->validated(),
+            'password' => Hash::make($request->password),
         ]);
+
+        auth()->login($user);
+
+        event(new Registered($user));
+
+        return to_route('verification.notice');
     }
 }
