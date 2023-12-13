@@ -10,5 +10,9 @@
         <input type="checkbox" name="remember">
 
         <button type="submit">로그인</button>
+
+        @foreach ($errors->all() as $error)
+            {{ $error }}
+        @endforeach
     </form>
 @endsection
