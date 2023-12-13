@@ -12,7 +12,9 @@
         <button type="submit">로그인</button>
 
         @foreach ($errors->all() as $error)
-            {{ $error }}
+            <div>{{ $error }}</div>
         @endforeach
+
+        @each('auth.social', $providers, 'provider')
     </form>
 @endsection
