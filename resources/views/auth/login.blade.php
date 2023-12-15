@@ -10,11 +10,13 @@
         <input type="checkbox" name="remember">
 
         <button type="submit">로그인</button>
-
-        @foreach ($errors->all() as $error)
-            <div>{{ $error }}</div>
-        @endforeach
-
-        @each('auth.social', $providers, 'provider')
     </form>
+    
+    @foreach ($errors->all() as $error)
+        <div>{{ $error }}</div>
+    @endforeach
+    
+    <a href="{{ route('password.request') }}">비밀번호 재설정</a>
+
+    @each('auth.social', $providers, 'provider')
 @endsection
