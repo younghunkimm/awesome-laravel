@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Auth\Passwords\CanResetPassword as ResetTablePassword;
-use Illuminate\Contracts\Auth\CanResetPassword;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Auth\Passwords\CanResetPassword as ResetTablePassword;
 
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
@@ -45,8 +47,20 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'password' => 'hashed',
     ];
 
-    public function blogs()
+    /**
+     * 블로그
+     */
+    public function blogs(): HasMany
     {
         return $this->hasMany(Blog::class);
+    }
+
+    /**
+     * 내가 구독한 블로그
+     */
+    public function subscriptions(): BelongsToMany
+    {
+        return $this->belongsToMany(Blog::class)
+            ->as('subscription');
     }
 }
