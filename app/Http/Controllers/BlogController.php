@@ -9,6 +9,14 @@ use App\Models\Blog;
 class BlogController extends Controller
 {
     /**
+     * 
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Blog::class, 'blog');
+    }
+
+    /**
      * 블로그 목록
      */
     public function index()

@@ -13,7 +13,7 @@ class BlogPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class BlogPolicy
      */
     public function view(User $user, Blog $blog): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class BlogPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class BlogPolicy
      */
     public function update(User $user, Blog $blog): bool
     {
-        //
+        return $user->id === $blog->user_id;
     }
 
     /**
@@ -45,22 +45,6 @@ class BlogPolicy
      */
     public function delete(User $user, Blog $blog): bool
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Blog $blog): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Blog $blog): bool
-    {
-        //
+        return $user->id === $blog->user_id;
     }
 }
